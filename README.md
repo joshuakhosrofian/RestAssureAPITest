@@ -70,3 +70,5 @@ mvn test -Dtestof="test1" -Denv"Staging"
 ```
 
 ## How to get Report
+All the test execution reports can be found under reports folder
+
