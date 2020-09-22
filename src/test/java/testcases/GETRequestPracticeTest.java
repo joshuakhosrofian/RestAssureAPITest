@@ -1,12 +1,13 @@
 package testcases;
 
+import com.jayway.jsonpath.JsonPath;
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;
-import io.restassured.path.json.JsonPath;
+
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
+//import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import org.testng.annotations.Test;
 import utility.Steps;
 
@@ -44,19 +45,15 @@ public class GETRequestPracticeTest {
         String payload = response.getBody().asString();
         Steps.logJson(payload);
         // to extract a specific dta from payload
-//        String emailVal = JsonPath.read(payload, "$.data.email");
-//        String firstNameVal = JsonPath.read(payload, "$.data.first_name");
-//        String lastNameVal = JsonPath.read(payload, "$.data.last_name");
-//        String adCompVal = JsonPath.read(payload, "$.ad.company");
-//
-//        System.out.println("Email: " + emailVal);
-//        System.out.println("First Name: " + firstNameVal);
-//        System.out.println("Last Name : " + lastNameVal);
-//        System.out.println("Ad computer" + );
+        String emailVal = JsonPath.read(payload, "$.data.email");
+        String firstNameVal = JsonPath.read(payload, "$.data.first_name");
+        String lastNameVal = JsonPath.read(payload, "$.data.last_name");
+        String adCompVal = JsonPath.read(payload, "$.ad.company");
 
-
-
-
+        System.out.println("Email: " + emailVal);
+        System.out.println("First Name: " + firstNameVal);
+        System.out.println("Last Name : " + lastNameVal);
+        System.out.println("Ad computer" + adCompVal);
 
     }
 
@@ -90,7 +87,17 @@ public class GETRequestPracticeTest {
         System.out.println(payload);
         response.body().prettyPrint();
 
-        
+        // CHANGE to extract a specific data from payload
+        String emailVal = JsonPath.read(payload, "$.data.email");
+        String firstNameVal = JsonPath.read(payload, "$.data.first_name");
+        String lastNameVal = JsonPath.read(payload, "$.data.last_name");
+        String adCompVal = JsonPath.read(payload, "$.ad.company");
+
+        System.out.println("Email: " + emailVal);
+        System.out.println("First Name: " + firstNameVal);
+        System.out.println("Last Name : " + lastNameVal);
+        System.out.println("Ad computer" + adCompVal);
+
 
 
     }
@@ -295,6 +302,38 @@ public class GETRequestPracticeTest {
         // 2. Specify that the request will be sent
         RequestSpecification spec = RestAssured.given();
         Response response = spec.get("/rest/v2/name/eesti");
+        // 3. Using the response object, extract each part of the response
+        // (status line, header, body)
+        System.out.println( response.statusLine());
+        System.out.println( response.statusCode());
+
+        // Headers
+        Headers headers = response.headers();
+        String entireHeaders = response.toString();
+        System.out.println(entireHeaders);
+        String contentType = headers.getValue("Content-Type");
+        String server = headers.getValue("Server");
+        String date = headers.getValue("Date");
+        System.out.println(contentType);
+        System.out.println(server);
+        System.out.println(date);
+
+        // Body
+        String payload = response.getBody().asString();
+        // to extract a specific data from payload
+        System.out.println(payload);
+        response.body().prettyPrint();
+
+    }
+
+    @Test
+    public void get_pokemon_berries_test9(){
+        // 1. Register base URI where request will be sent
+        RestAssured.baseURI = "https://pokeapi.co";
+
+        // 2. Specify that the request will be sent
+        RequestSpecification spec = RestAssured.given();
+        Response response = spec.get("/api/v2/berries/{id or name}/");
         // 3. Using the response object, extract each part of the response
         // (status line, header, body)
         System.out.println( response.statusLine());

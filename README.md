@@ -18,6 +18,7 @@ This api automation frameowrk depends on following external libraries
 ```
 ### Framework Architectural Diagram
 ```
+|-reports                   # all the geneerated test execution reports are here
 |-pom.xml                   # project object model file for the maven software
 |-testng.xml                # TestNG configuration files for the test structures and groupings
 |-src
@@ -64,7 +65,7 @@ If you would like to execute multiple different types of tests stated on testng.
 mvn test -Dtestof="test1", "test2", "test3"
 ```
 
-If you would liek to execute a specific test on specific environment ( default=UAT )
+If you would like to execute a specific test on specific environment ( default=UAT )
 ```shell script
 mvn test -Dtestof="test1" -Denv"Staging"
 ```
