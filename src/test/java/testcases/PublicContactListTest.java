@@ -1,5 +1,6 @@
 package testcases;
 
+import commons.ApiConfig;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -8,7 +9,7 @@ import org.testng.annotations.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class PublicContactListTest {
+public class PublicContactListTest extends ApiConfig {
 
     @Test
     public void register_single_user(){
@@ -65,30 +66,29 @@ public class PublicContactListTest {
         Response response = spec.post("/pcl/auth/login");
 
         System.out.println( response.getStatusLine());
+        String sessionToken = response.getBody().asString();
+        System.out.println(sessionToken);
 
     }
 
+    @Test
+    public void logout_single_user() {
+        // 1. Login a user
 
-    public String read(String filePath) {
-        String finalText = null;
-        try {
-            FileReader fr = new FileReader(filePath);
-            BufferedReader br = new BufferedReader(fr);
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            finalText = sb.toString();
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String path = System.getProperty("user.dir")+ "/src/test/resources/payloads/newUser.txt";
+        String payload = read(path).trim();
 
-        return finalText;
+        RestAssured.baseURI = base_uri;
+        Response response = RestAssured.given().contentType("Application/json").body(payload).post("/pcl/auth/login");
+        String sessionToken = response.getBody().asString();
+
+        // logout a user <---- Text Steps
+        RestAssured.given()
+                .header("Authorization", sessionToken)
+                .get("/pcl/auth/logout");
     }
+
+
 
 
 }

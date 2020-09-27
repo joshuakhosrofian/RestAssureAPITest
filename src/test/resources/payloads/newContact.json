@@ -1,0 +1,13 @@
+{
+  "firstName": "Josh",
+  "lastName": "Kay",
+  "email": "joshkay@gmail.com",
+  "location": {
+    "city": "Cupertino, CA",
+    "country": "USA"
+  },
+  "employer": {
+    "jobTitle": "Software Engineer in Test",
+    "company": "Apple"
+  }
+}
