@@ -1,4 +1,0 @@
-{
-    "email": "nijat@example.com",
-    "password": "SuperSecretPassword123"
-}
